@@ -5,6 +5,7 @@ import com.andre.dodgegame.DodgeGame
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.InputAdapter
 import com.badlogic.gdx.Screen
+import com.badlogic.gdx.audio.Music
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.graphics.Texture
@@ -16,9 +17,14 @@ class MainMenuScreen(private val game: DodgeGame,private val androidInterface: A
     private var playButtonInactive:Texture = Texture(Gdx.files.internal("image/play_button_inactive.png"))
     private val PLAY_BUTTON_WIDTH = 300f
     private val PLAY_BUTTON_HEIGHT = 120f
+    private var gameMusic: Music
     private var title: GlyphLayout = GlyphLayout(game.font, "DodgeGame", Color.WHITE, 0f, Align.left, false)
     private var objective: GlyphLayout = GlyphLayout(game.font, "survive one minute !", Color.WHITE, 0f, Align.left, false)
     init {
+        //YouFulca work
+        gameMusic = Gdx.audio.newMusic(Gdx.files.internal("Musics/Never-Surrender_loop.mp3"))
+        gameMusic.isLooping = true
+        gameMusic.play()
         Gdx.input.inputProcessor = object : InputAdapter() {
             override fun touchDown(screenX: Int, screenY: Int, pointer: Int, button: Int): Boolean {
 
@@ -65,6 +71,7 @@ class MainMenuScreen(private val game: DodgeGame,private val androidInterface: A
 
     override fun dispose() {
         Gdx.input.inputProcessor = null
+        gameMusic.dispose()
         playButtonInactive.dispose()
     }
 }
