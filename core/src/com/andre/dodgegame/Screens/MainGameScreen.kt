@@ -235,7 +235,8 @@ class MainGameScreen(private val game: DodgeGame) : Screen {
             if(fireball.overlaps(player)){
                 fireballExplosion.play()
                 if(player.isDead()){
-//                    dead.play()
+                    dead.play()
+                    gameOver()
                 }
                 fireballIt.remove()
             }
@@ -253,8 +254,8 @@ class MainGameScreen(private val game: DodgeGame) : Screen {
             if(superfireball.overlaps(player)){
                 fireballExplosion.play()
                 if(player.isDead()){
-//                    dead.play()
-//                    Gdx.app.exit()
+                    dead.play()
+                    gameOver()
 
                 }
 
@@ -265,6 +266,11 @@ class MainGameScreen(private val game: DodgeGame) : Screen {
     }
 
     override fun pause() {
+    }
+    private fun gameOver(){
+        dispose()
+        game.screen = GameOverScreen(game, time)
+        return
     }
 
     override fun resume() {
