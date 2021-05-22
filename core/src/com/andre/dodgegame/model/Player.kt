@@ -1,9 +1,8 @@
-package com.andre.dodgegame.Model
+package com.andre.dodgegame.model
 
 import com.badlogic.gdx.math.Rectangle
-import com.badlogic.gdx.scenes.scene2d.ui.Touchpad
 
-class Player(px : Float, py :  Float, pWidth :  Float, pHeight :  Float,private val pHp:Int,private val speed:Int) : Rectangle() {
+class Player(px : Float, py :  Float, pWidth :  Float, pHeight :  Float, pHp:Int, private val speed:Int) : Rectangle() {
     private var hp:Int = pHp
     private var maxHp:Int = pHp
     init {

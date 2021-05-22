@@ -1,4 +1,4 @@
-package com.andre.dodgegame.Screens
+package com.andre.dodgegame.screens
 
 import com.andre.dodgegame.DodgeGame
 import com.badlogic.gdx.Gdx

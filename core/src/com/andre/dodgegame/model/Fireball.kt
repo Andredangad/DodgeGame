@@ -1,10 +1,10 @@
-package com.andre.dodgegame.Model
+package com.andre.dodgegame.model
 
 import com.badlogic.gdx.math.Rectangle
 import com.badlogic.gdx.math.Vector2
 import kotlin.math.sqrt
 
-class Fireball(rx: Float, ry: Float, rw: Float, rh: Float, private val playerx: Float, private val playery: Float, private val speed: Float) : Rectangle(){
+class Fireball(rx: Float, ry: Float, rw: Float, rh: Float, playerx: Float, playery: Float, speed: Float) : Rectangle(){
     var velX : Double = 0.0
     var velY: Double = 0.0
     var angle: Int = 0

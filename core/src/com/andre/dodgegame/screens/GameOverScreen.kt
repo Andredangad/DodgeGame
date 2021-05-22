@@ -1,4 +1,4 @@
-package com.andre.dodgegame.Screens
+package com.andre.dodgegame.screens
 
 import com.andre.dodgegame.DodgeGame
 import com.badlogic.gdx.Gdx
@@ -14,9 +14,9 @@ class GameOverScreen(private val game: DodgeGame, private val time:Int): Screen 
     private var exitButton: Texture = Texture(Gdx.files.internal("image/exit_button_inactive.png"))
     private val EXIT_BUTTON_WIDTH = 300f
     private val EXIT_BUTTON_HEIGHT = 120f
-    val m = (time)/60
-    val s= (time - m*60)
-    val t = "${if (m <= 10) "0${m}" else "$m"} : ${if (s <= 10) "0${s}" else "$s"}"
+    private val m = (time)/60
+    private val s= (time - m*60)
+    private val t = "${if (m <= 10) "0${m}" else "$m"} : ${if (s <= 10) "0${s}" else "$s"}"
     private var win: GlyphLayout = GlyphLayout(game.font, "You won !!", Color.WHITE, 0f, Align.left, false)
     private var lost: GlyphLayout = GlyphLayout(game.font, "You lost", Color.WHITE, 0f, Align.left, false)
     private var timer: GlyphLayout = GlyphLayout(game.font, "you survive : $t", Color.WHITE, 0f, Align.left, false)
@@ -68,7 +68,7 @@ class GameOverScreen(private val game: DodgeGame, private val time:Int): Screen 
     }
 
     override fun resize(width: Int, height: Int) {
-        game.camera.setToOrtho(false, width.toFloat(), height.toFloat());
+        game.camera.setToOrtho(false, width.toFloat(), height.toFloat())
     }
 
     override fun dispose() {

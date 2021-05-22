@@ -1,17 +1,15 @@
-package com.andre.dodgegame.Screens
+package com.andre.dodgegame.screens
 
 import com.andre.dodgegame.DodgeGame
-import com.andre.dodgegame.Model.Fireball
-import com.andre.dodgegame.Model.Player
-import com.andre.dodgegame.Model.SuperFireBall
+import com.andre.dodgegame.model.Fireball
+import com.andre.dodgegame.model.Player
+import com.andre.dodgegame.model.SuperFireBall
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Screen
 import com.badlogic.gdx.audio.Music
 import com.badlogic.gdx.audio.Sound
-import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.graphics.Texture
-import com.badlogic.gdx.graphics.g2d.BitmapFont
 import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.badlogic.gdx.maps.tiled.TiledMap
 import com.badlogic.gdx.maps.tiled.TmxMapLoader
@@ -32,9 +30,6 @@ import kotlin.math.cos
 import kotlin.math.sin
 
 class MainGameScreen(private val game: DodgeGame) : Screen {
-//    var batch: SpriteBatch
-
-
     private var fireballImage: Texture
     private var superfireballImage: Texture
     private var playerImage: Texture
@@ -43,7 +38,6 @@ class MainGameScreen(private val game: DodgeGame) : Screen {
     private var dead: Sound
     private var fireballExplosion: Sound
     private var gameMusic: Music
-//    private var camera: OrthographicCamera
 
     private var touchpad: Touchpad
     private var stage: Stage
@@ -51,34 +45,28 @@ class MainGameScreen(private val game: DodgeGame) : Screen {
     private var touchpadStyle = Touchpad.TouchpadStyle()
     private var touchBackground: Drawable
     private var touchKnob: Drawable
+
     private var fireballs:ArrayList<Fireball> = ArrayList()
     private var superfireballs:ArrayList<SuperFireBall> = ArrayList()
     private var lastFbTime:Long = 0
     private var lastSfbTime:Long = TimeUtils.nanoTime()
-//    private var worldWidth = 1200f
-//    private var worldHeight = 688f
+
     private var viewport: Viewport
     private var characterW = 32f
     private var characterH = 32f
-//    private lateinit var imageMain: Texture
-//    private lateinit var mainBackground: TextureRegion
     private var fb: TextureRegion
     private var sfb: TextureRegion
     private var player: Player
-    private var red: Texture
-//    private lateinit var blank: Texture
+    private var red: Texture = Texture(Gdx.files.internal("image/red.png"))
+    private var fbSpeed = 3.5f
+
     private val timer = System.currentTimeMillis()
-    private val gameLifeTime:Int = 60
-    //    private lateinit var screen:Play
+    private var time = 0
+
     private var map: TiledMap
     private var renderer: OrthogonalTiledMapRenderer
-    private var time = 0
-    private var fbSpeed = 3.5f
-    //    private var joyStick:Joystick = Joystick()
 
     init {
-//        batch = SpriteBatch()
-        red = Texture(Gdx.files.internal("image/red.png"))
         val loader = TmxMapLoader()
         map = loader.load("maps/map.tmx")
         renderer = OrthogonalTiledMapRenderer(map,game.batch)
@@ -96,9 +84,7 @@ class MainGameScreen(private val game: DodgeGame) : Screen {
         gameMusic = Gdx.audio.newMusic(Gdx.files.internal("Musics/Battle-deadly_loop.mp3"))
         gameMusic.isLooping = true
         gameMusic.play()
-//        camera = OrthographicCamera()
-//        Permet de voir combien de worldunit on va voir à travers la camera
-//        camera.setToOrtho(false, 800f, 500f)
+
         player = Player(game.worldWidth / 2f - characterW / 2f, game.worldHeight / 2f - characterH / 2f, characterW, characterH, 3, 5)
         touchpadSkin.add("touchBackground", Texture(Gdx.files.internal("image/touchBackground.png")))
         touchpadSkin.add("touchKnob", Texture(Gdx.files.internal("image/touchKnob.png")))
@@ -133,7 +119,7 @@ class MainGameScreen(private val game: DodgeGame) : Screen {
     }
 
     private fun spawnSuperFireBall(){
-        superfireballs.add(SuperFireBall(MathUtils.random(0f, game.worldWidth - 32f), game.worldHeight, 50f, 32f, player.x, player.y, 3.5f))
+        superfireballs.add(SuperFireBall(MathUtils.random(0f, game.worldWidth - 32f), game.worldHeight, 50f, 32f))
         lastSfbTime = TimeUtils.nanoTime()
         beware.play()
     }
@@ -154,7 +140,7 @@ class MainGameScreen(private val game: DodgeGame) : Screen {
                 rd = Fireball(0f, MathUtils.random(0f, game.worldHeight - 32f), 50f, 32f, player.x, player.y, fbSpeed)
             }
         }
-//        val rd = Fireball(MathUtils.random(0f, worldWidth-64f) , worldHeight, 50f, 32f, player.x, player.y, 3.5f)
+
         if (rd != null) {
             fireballs.add(rd)
         }
@@ -169,42 +155,27 @@ class MainGameScreen(private val game: DodgeGame) : Screen {
     }
 
     override fun render(delta: Float) {
-
-//        time = gameLifeTime - (System.currentTimeMillis() - timer).toInt()/1000
         time = (System.currentTimeMillis() - timer).toInt()/1000
         val m = (time)/60
         val s= (time - m*60)
         val t = "${if (m <= 10) "0${m}" else "$m"} : ${if (s <= 10) "0${s}" else "$s"}"
-//        ScreenUtils.clear(0f, 0f, 0f, 0f)
-        game.camera.position.set((player.x+ (player.width/2)), (player.y+ (player.height/2)), 0f);
+        game.camera.position.set((player.x+ (player.width/2)), (player.y+ (player.height/2)), 0f)
         game.camera.update()
-        Gdx.gl.glClearColor(0f, 0f, 0f, 1f);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        Gdx.gl.glClearColor(0f, 0f, 0f, 1f)
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT)
         renderer.setView(game.camera)
         renderer.render()
-
         game.batch.projectionMatrix = game.camera.combined
-
         game.batch.begin()
-        game.batch.draw(red,game.camera.position.x - (game.camera.viewportWidth/2),game.camera.position.y + (game.camera.viewportHeight/2 - 15f), (game.camera.viewportWidth/player.maxHp() * player.getHp() ), 15f)
-
-
-//        batch.draw(blank, 0f, 0f, worldWidth, worldHeight)
-        // TIMER
+        //Draw timer
         game.font.draw(game.batch, (t), game.camera.position.x - (game.camera.viewportWidth/8),game.camera.position.y + (game.camera.viewportHeight/2 - 25f))
+        //Draw player
         game.batch.draw(playerImage, player.x, player.y, player.width, player.height)
+        //Draw life
         game.batch.draw(red,game.camera.position.x - (game.camera.viewportWidth/2),game.camera.position.y + (game.camera.viewportHeight/2 - 15f), (game.camera.viewportWidth/player.maxHp() * player.getHp() ), 15f)
-        fireballs.forEach {
-//            batch.draw(fireballImage, it.x, it.y, it.width, it.height)
-            game.batch.draw(fb, it.x, it.y, it.width/2, it.height/2, it.width, it.height, 1f, 1f, it.angle.toFloat())
-//            val image2 = Image(fireballImage)
-//            batch.draw(fireballImage, it.x, it.y, it.x, it.y, 64f, 64f, 1f, 2.0f, 45f, it.x.toInt(), it.y.toInt(), 64, 64, false, false)
-//            image2.setPosition(it.x, it.y)
-//            image2.width = it.width
-//            image2.height = it.height
-//            image2.rotation = 45F
-//            stage.addActor(image2)
 
+        fireballs.forEach {
+            game.batch.draw(fb, it.x, it.y, it.width/2, it.height/2, it.width, it.height, 1f, 1f, it.angle.toFloat())
         }
         superfireballs.forEach {
 

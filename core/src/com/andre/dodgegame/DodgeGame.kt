@@ -1,6 +1,6 @@
 package com.andre.dodgegame
 
-import com.andre.dodgegame.Screens.MainMenuScreen
+import com.andre.dodgegame.screens.MainMenuScreen
 import com.badlogic.gdx.Game
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.OrthographicCamera
@@ -8,7 +8,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 
 
-class DodgeGame() : Game() {
+class DodgeGame : Game() {
     lateinit var batch: SpriteBatch
     lateinit var camera: OrthographicCamera
     var worldWidth = 1200f
