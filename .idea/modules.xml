@@ -2,9 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/dodgegame.iml" filepath="$PROJECT_DIR$/.idea/modules/dodgegame.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/android/dodgegame.android.iml" filepath="$PROJECT_DIR$/.idea/modules/android/dodgegame.android.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/core/dodgegame.core.iml" filepath="$PROJECT_DIR$/.idea/modules/core/dodgegame.core.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/DodgeGame.iml" filepath="$PROJECT_DIR$/.idea/modules/DodgeGame.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/android/DodgeGame.android.iml" filepath="$PROJECT_DIR$/.idea/modules/android/DodgeGame.android.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/core/DodgeGame.core.iml" filepath="$PROJECT_DIR$/.idea/modules/core/DodgeGame.core.iml" />
     </modules>
   </component>
 </project>

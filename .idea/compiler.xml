@@ -2,7 +2,7 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <bytecodeTargetLevel target="1.7">
-      <module name="dodgegame.android" target="1.8" />
+      <module name="DodgeGame.android" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>
