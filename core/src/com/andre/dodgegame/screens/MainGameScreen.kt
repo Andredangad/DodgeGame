@@ -1,5 +1,6 @@
 package com.andre.dodgegame.screens
 
+import com.andre.dodgegame.AndroidInterface
 import com.andre.dodgegame.DodgeGame
 import com.andre.dodgegame.model.Fireball
 import com.andre.dodgegame.model.Player
@@ -29,7 +30,7 @@ import kotlin.math.atan2
 import kotlin.math.cos
 import kotlin.math.sin
 
-class MainGameScreen(private val game: DodgeGame) : Screen {
+class MainGameScreen(private val game: DodgeGame, private val androidInterface: AndroidInterface) : Screen {
     private var fireballImage: Texture
     private var superfireballImage: Texture
     private var playerImage: Texture
@@ -240,7 +241,7 @@ class MainGameScreen(private val game: DodgeGame) : Screen {
     }
     private fun gameOver(){
         dispose()
-        game.screen = GameOverScreen(game, time)
+        game.screen = GameOverScreen(game, time, androidInterface)
         return
     }
 

@@ -1,5 +1,6 @@
 package com.andre.dodgegame.screens
 
+import com.andre.dodgegame.AndroidInterface
 import com.andre.dodgegame.DodgeGame
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.InputAdapter
@@ -10,7 +11,7 @@ import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.GlyphLayout
 import com.badlogic.gdx.utils.Align
 
-class MainMenuScreen(private val game: DodgeGame) : Screen {
+class MainMenuScreen(private val game: DodgeGame,private val androidInterface: AndroidInterface) : Screen {
 
     private var playButtonInactive:Texture = Texture(Gdx.files.internal("image/play_button_inactive.png"))
     private val PLAY_BUTTON_WIDTH = 300f
@@ -25,7 +26,7 @@ class MainMenuScreen(private val game: DodgeGame) : Screen {
                 val y = game.camera.viewportHeight - screenY
                 if(screenX > x && screenX < x + PLAY_BUTTON_WIDTH && y < game.camera.viewportHeight/2 + PLAY_BUTTON_HEIGHT/2 && y > game.camera.viewportHeight/2 - PLAY_BUTTON_HEIGHT/2  ){
                     dispose()
-                    game.screen = MainGameScreen(game)
+                    game.screen = MainGameScreen(game, androidInterface)
                 }
                 return super.touchUp(screenX, screenY, pointer, button)
             }

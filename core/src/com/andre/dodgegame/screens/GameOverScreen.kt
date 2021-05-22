@@ -1,5 +1,6 @@
 package com.andre.dodgegame.screens
 
+import com.andre.dodgegame.AndroidInterface
 import com.andre.dodgegame.DodgeGame
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.InputAdapter
@@ -10,7 +11,7 @@ import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.GlyphLayout
 import com.badlogic.gdx.utils.Align
 
-class GameOverScreen(private val game: DodgeGame, private val time:Int): Screen {
+class GameOverScreen(private val game: DodgeGame, private val time: Int, private val androidInterface: AndroidInterface): Screen {
     private var exitButton: Texture = Texture(Gdx.files.internal("image/exit_button_inactive.png"))
     private val EXIT_BUTTON_WIDTH = 300f
     private val EXIT_BUTTON_HEIGHT = 120f
@@ -20,8 +21,10 @@ class GameOverScreen(private val game: DodgeGame, private val time:Int): Screen 
     private var win: GlyphLayout = GlyphLayout(game.font, "You won !!", Color.WHITE, 0f, Align.left, false)
     private var lost: GlyphLayout = GlyphLayout(game.font, "You lost", Color.WHITE, 0f, Align.left, false)
     private var timer: GlyphLayout = GlyphLayout(game.font, "you survive : $t", Color.WHITE, 0f, Align.left, false)
+    private var winState:Boolean = false
 
     init {
+        if(time >= 60) winState = true
         Gdx.input.inputProcessor = object : InputAdapter() {
             override fun touchDown(screenX: Int, screenY: Int, pointer: Int, button: Int): Boolean {
 
@@ -29,7 +32,8 @@ class GameOverScreen(private val game: DodgeGame, private val time:Int): Screen 
                 val y = game.camera.viewportHeight - screenY
                 if(screenX > x && screenX < x + EXIT_BUTTON_WIDTH && y < game.camera.viewportHeight/2 + EXIT_BUTTON_HEIGHT/2 && y > game.camera.viewportHeight/2 - EXIT_BUTTON_HEIGHT/2  ){
                     dispose()
-                    Gdx.app.exit()
+//                    Gdx.app.exit()
+                    androidInterface.onGameFinish(winState)
                 }
                 return super.touchUp(screenX, screenY, pointer, button)
             }
@@ -49,7 +53,7 @@ class GameOverScreen(private val game: DodgeGame, private val time:Int): Screen 
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT)
         game.batch.begin()
         game.batch.draw(exitButton, game.camera.viewportWidth/2 - EXIT_BUTTON_WIDTH/2, game.camera.viewportHeight/2 - EXIT_BUTTON_HEIGHT/2, EXIT_BUTTON_WIDTH, EXIT_BUTTON_HEIGHT)
-        if(time < 60){
+        if(!winState){
             game.font.draw(game.batch, lost, game.camera.viewportWidth/2 - lost.width / 2, (game.camera.viewportHeight/2 + EXIT_BUTTON_HEIGHT))
         }
         else{

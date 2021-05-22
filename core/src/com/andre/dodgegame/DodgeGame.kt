@@ -8,7 +8,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 
 
-class DodgeGame : Game() {
+class DodgeGame(private val androidInterface: AndroidInterface) : Game() {
     lateinit var batch: SpriteBatch
     lateinit var camera: OrthographicCamera
     var worldWidth = 1200f
@@ -20,7 +20,8 @@ class DodgeGame : Game() {
         batch = SpriteBatch()
         camera = OrthographicCamera(worldWidth, worldHeight)
         font = BitmapFont(Gdx.files.internal("font/score.fnt"))
-        this.setScreen(MainMenuScreen(this))
+
+        this.setScreen(MainMenuScreen(this, androidInterface))
 
     }
 
