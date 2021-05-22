@@ -139,7 +139,7 @@ class MainGameScreen(private val game: DodgeGame) : Screen {
     }
     private fun spawnFireball(){
         var rd: Fireball? = null
-        
+        if(time%30 == 0 && fbSpeed < 7) fbSpeed++
         when(Random().nextInt(4)){
             0 -> {
                 rd = Fireball(MathUtils.random(0f, game.worldWidth - 32f), game.worldHeight, 50f, 32f, player.x, player.y, fbSpeed)
@@ -175,8 +175,6 @@ class MainGameScreen(private val game: DodgeGame) : Screen {
         val m = (time)/60
         val s= (time - m*60)
         val t = "${if (m <= 10) "0${m}" else "$m"} : ${if (s <= 10) "0${s}" else "$s"}"
-        if(time == 0){
-        }
 //        ScreenUtils.clear(0f, 0f, 0f, 0f)
         game.camera.position.set((player.x+ (player.width/2)), (player.y+ (player.height/2)), 0f);
         game.camera.update()
@@ -210,8 +208,8 @@ class MainGameScreen(private val game: DodgeGame) : Screen {
         }
         superfireballs.forEach {
 
-            var dx = (player.x - it.x).toDouble()
-            var dy = (player.y - it.y).toDouble()
+            val dx = (player.x - it.x).toDouble()
+            val dy = (player.y - it.y).toDouble()
             val angle = Vector2(dx.toFloat(), dy.toFloat())
             val angledeg = angle.angleDeg()
             game.batch.draw(sfb, it.x, it.y,  it.width/2, it.height/2, it.width, it.height, 1f, 1f, angledeg)
@@ -237,7 +235,7 @@ class MainGameScreen(private val game: DodgeGame) : Screen {
             if(fireball.overlaps(player)){
                 fireballExplosion.play()
                 if(player.isDead()){
-                    dead.play()
+//                    dead.play()
                 }
                 fireballIt.remove()
             }
@@ -256,7 +254,7 @@ class MainGameScreen(private val game: DodgeGame) : Screen {
                 fireballExplosion.play()
                 if(player.isDead()){
 //                    dead.play()
-                    Gdx.app.exit()
+//                    Gdx.app.exit()
 
                 }
 
