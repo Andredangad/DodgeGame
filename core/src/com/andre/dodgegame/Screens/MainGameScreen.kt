@@ -67,18 +67,16 @@ class MainGameScreen(private val game: DodgeGame) : Screen {
     private var player: Player
     private var red: Texture
 //    private lateinit var blank: Texture
-    private var font: BitmapFont
     private val timer = System.currentTimeMillis()
     private val gameLifeTime:Int = 60
     //    private lateinit var screen:Play
     private var map: TiledMap
     private var renderer: OrthogonalTiledMapRenderer
-
+    private var time = 0
+    private var fbSpeed = 3.5f
     //    private var joyStick:Joystick = Joystick()
 
     init {
-        font = BitmapFont()
-        font.color = Color.GREEN
 //        batch = SpriteBatch()
         red = Texture(Gdx.files.internal("image/red.png"))
         val loader = TmxMapLoader()
@@ -141,19 +139,19 @@ class MainGameScreen(private val game: DodgeGame) : Screen {
     }
     private fun spawnFireball(){
         var rd: Fireball? = null
-
+        
         when(Random().nextInt(4)){
             0 -> {
-                rd = Fireball(MathUtils.random(0f, game.worldWidth - 32f), game.worldHeight, 50f, 32f, player.x, player.y, 3.5f)
+                rd = Fireball(MathUtils.random(0f, game.worldWidth - 32f), game.worldHeight, 50f, 32f, player.x, player.y, fbSpeed)
             }
             1 -> {
-                rd = Fireball(MathUtils.random(0f, game.worldWidth - 32f), 0f, 50f, 32f, player.x, player.y, 3.5f)
+                rd = Fireball(MathUtils.random(0f, game.worldWidth - 32f), 0f, 50f, 32f, player.x, player.y, fbSpeed)
             }
             2 -> {
-                rd = Fireball(game.worldWidth, MathUtils.random(0f, game.worldHeight - 32f), 50f, 32f, player.x, player.y, 3.5f)
+                rd = Fireball(game.worldWidth, MathUtils.random(0f, game.worldHeight - 32f), 50f, 32f, player.x, player.y, fbSpeed)
             }
             3 -> {
-                rd = Fireball(0f, MathUtils.random(0f, game.worldHeight - 32f), 50f, 32f, player.x, player.y, 3.5f)
+                rd = Fireball(0f, MathUtils.random(0f, game.worldHeight - 32f), 50f, 32f, player.x, player.y, fbSpeed)
             }
         }
 //        val rd = Fireball(MathUtils.random(0f, worldWidth-64f) , worldHeight, 50f, 32f, player.x, player.y, 3.5f)
@@ -172,7 +170,11 @@ class MainGameScreen(private val game: DodgeGame) : Screen {
 
     override fun render(delta: Float) {
 
-        val time: Int = gameLifeTime - (System.currentTimeMillis() - timer).toInt()/1000
+//        time = gameLifeTime - (System.currentTimeMillis() - timer).toInt()/1000
+        time = (System.currentTimeMillis() - timer).toInt()/1000
+        val m = (time)/60
+        val s= (time - m*60)
+        val t = "${if (m <= 10) "0${m}" else "$m"} : ${if (s <= 10) "0${s}" else "$s"}"
         if(time == 0){
         }
 //        ScreenUtils.clear(0f, 0f, 0f, 0f)
@@ -191,7 +193,7 @@ class MainGameScreen(private val game: DodgeGame) : Screen {
 
 //        batch.draw(blank, 0f, 0f, worldWidth, worldHeight)
         // TIMER
-        font.draw(game.batch, (time).toString(),game.camera.position.x,game.camera.position.y + (game.camera.viewportHeight/2 - 25f))
+        game.font.draw(game.batch, (t), game.camera.position.x - (game.camera.viewportWidth/8),game.camera.position.y + (game.camera.viewportHeight/2 - 25f))
         game.batch.draw(playerImage, player.x, player.y, player.width, player.height)
         game.batch.draw(red,game.camera.position.x - (game.camera.viewportWidth/2),game.camera.position.y + (game.camera.viewportHeight/2 - 15f), (game.camera.viewportWidth/player.maxHp() * player.getHp() ), 15f)
         fireballs.forEach {
