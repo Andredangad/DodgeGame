@@ -280,15 +280,21 @@ class MainGameScreen(private val game: DodgeGame) : Screen {
     }
 
     override fun dispose() {
-//        batch.dispose()
         fireballImage.dispose()
+        superfireballImage.dispose()
         playerImage.dispose()
-        fireballExplosion.dispose()
         beware.dispose()
         dead.dispose()
+        fireballExplosion.dispose()
         gameMusic.dispose()
+        stage.dispose()
+        touchpadSkin.dispose()
+        touchpadSkin.dispose()
+        red.dispose()
         map.dispose()
         renderer.dispose()
     }
+
+
 
 }

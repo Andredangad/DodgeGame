@@ -64,5 +64,6 @@ class MainMenuScreen(private val game: DodgeGame) : Screen {
 
     override fun dispose() {
         Gdx.input.inputProcessor = null
+        playButtonInactive.dispose()
     }
 }

@@ -73,6 +73,7 @@ class GameOverScreen(private val game: DodgeGame, private val time:Int): Screen 
 
     override fun dispose() {
         Gdx.input.inputProcessor = null
+        exitButton.dispose()
     }
 
 }
